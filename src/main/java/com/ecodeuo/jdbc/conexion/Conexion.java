@@ -7,14 +7,21 @@ public class Conexion {
     public static Connection getConnection (){
         Connection conexion = null;
         var url = "jdbc:mysql://localhost:3306/zona_fit";
-        var usuario = "root";
+        var nombre = "root";
         var password = "klaPAUsius9425";
         try {
-            conexion = DriverManager.getConnection(url, usuario, password);
+            conexion = DriverManager.getConnection(url, nombre, password);
         }catch (Exception e){
-            System.out.println("error al conectarse a la BD: " + e.getMessage());
+            System.out.println("no se realizo la conexion por: "+e.getMessage());
         }
         return conexion;
+    }
+
+    public static void main(String[] args) {
+        var conexion = Conexion.getConnection();
+        if (conexion != null)
+            System.out.println("nos conectamos papa");
+        else System.out.println("nos lleva");
     }
 
 
