@@ -7,14 +7,16 @@ public class Conexion {
     public static Connection getConnection (){
         Connection conexion = null;
         var url = "jdbc:mysql://localhost:3306/zona_fit";
-        var nombre = "root";
+        var usuario = "root";
         var password = "klaPAUsius9425";
+
         try {
-            conexion = DriverManager.getConnection(url, nombre, password);
-        }catch (Exception e){
-            System.out.println("no se realizo la conexion por: "+e.getMessage());
+            conexion = DriverManager.getConnection(url, usuario, password);
+        } catch (Exception e){
+            System.out.println("error de tipo: "+ e.getMessage());
         }
         return conexion;
+
     }
 
     public static void main(String[] args) {
