@@ -91,10 +91,10 @@ return false;
         String sql = "INSERT INTO clientes (nombre, apellido, membresia) VALUES (?, ?, ?)";
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, rs.getString("nombre"));
-            ps.setString(2, rs.getString("apellido"));
-            ps.setInt(3, rs.getInt("membresia"));
-            rs = ps.executeQuery();
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getApellido());
+            ps.setInt(3, cliente.getMembresia());
+
             int filasAfectadas = ps.executeUpdate();
 
             return  filasAfectadas > 0;
@@ -104,9 +104,15 @@ return false;
         }
         finally {
             try {
+                if (rs != null){
+                    rs.close();
+                }
+                if (ps != null){
+                    ps.close();
+                }
                 con.close();
             }catch (Exception e){
-                System.out.println("error de tipo: "+ e.getMessage());
+                System.out.println("no se pudo cerrar la conexion: "+e.getMessage());
             }
         }
 
@@ -115,6 +121,36 @@ return false;
 
     @Override
     public boolean modificarCliente(Cliente cliente) {
+
+        String sql = "UPDATE clientes SET nombre = ?, apellido = ?, membresia = ? WHERE id = ?";
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getApellido());
+            ps.setInt(3, cliente.getMembresia());
+            ps.setInt(4, cliente.getId());
+
+
+            int filasAfectadas = ps.executeUpdate();
+
+            return filasAfectadas > 0;
+        }catch (Exception e){
+            System.out.println("error: " + e.getMessage());
+        }
+        finally {
+            try {
+                if (ps != null){
+                    ps.close();
+                }
+                if (con != null){
+                    con.close();
+                };
+
+            }catch (Exception e){
+                System.out.println("no se pudo cerrar la conexion: "+e.getMessage());
+            }
+        }
         return false;
     }
 
@@ -128,11 +164,24 @@ return false;
         /*var listado = clienteDao.listarClientes();
         listado.forEach(System.out::println);*/
 
-        var clientaso =  new Cliente(3);
+       /* var clientaso =  new Cliente(3);
         var encontrado = clienteDao.buscarPorId(clientaso);
         if(encontrado){
             System.out.println("se encontro el cliente: " + clientaso);
         }else
-            System.out.println("paila ñero");
+            System.out.println("paila ñero");*/
+        //agregar un cliente
+        /*Cliente clienteSuper = new Cliente();
+        clienteSuper.setNombre("mariana");
+        clienteSuper.setApellido("macias");
+        clienteSuper.setMembresia(1000);
+
+        clienteDao.agregarCliente(clienteSuper);*/
+
+        //modificar cliente
+        var clienteEnsayo = new Cliente(1,"pablu","meriol", 365);
+        System.out.println(clienteDao.modificarCliente(clienteEnsayo));
+        clienteDao.modificarCliente(clienteEnsayo);
+
     }
 }
