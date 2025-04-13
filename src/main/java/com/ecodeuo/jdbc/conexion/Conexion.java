@@ -8,7 +8,7 @@ public class Conexion {
         Connection conexion = null;
         var url = "jdbc:mysql://localhost:3306/zona_fit";
         var usuario = "root";
-        var password = "klaPAUsius9425";
+       
 
         try {
             conexion = DriverManager.getConnection(url, usuario, password);
