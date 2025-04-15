@@ -96,8 +96,7 @@ return false;
             ps.setInt(3, cliente.getMembresia());
 
             int filasAfectadas = ps.executeUpdate();
-
-            return  filasAfectadas > 0;
+            return filasAfectadas > 0;
 
         }catch (Exception e){
             System.out.println("error de tipo: " + e.getMessage());
@@ -179,9 +178,17 @@ return false;
         clienteDao.agregarCliente(clienteSuper);*/
 
         //modificar cliente
-        var clienteEnsayo = new Cliente(1,"pablu","meriol", 365);
+        /*var clienteEnsayo = new Cliente(1,"pablu","meriol", 365);
         System.out.println(clienteDao.modificarCliente(clienteEnsayo));
-        clienteDao.modificarCliente(clienteEnsayo);
+        clienteDao.modificarCliente(clienteEnsayo);*/
+
+        // NUEVA PRUEBA AGREGAR CLIENTE
+        Cliente clienteX = new Cliente();
+        clienteX.setNombre("vespusio");
+        clienteX.setApellido("americolino");
+        clienteX.setMembresia(852);
+
+        clienteDao.agregarCliente(clienteX);
 
     }
 }
