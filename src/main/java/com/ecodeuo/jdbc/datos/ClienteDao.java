@@ -156,6 +156,25 @@ return false;
 
     @Override
     public boolean eliminarCliente(Cliente cliente) {
+
+        var sql = "DELETE FROM clientes WHERE id = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, cliente.getId());
+            int filasAfectadas = ps.executeUpdate();
+            return filasAfectadas > 0;
+
+        }catch (Exception e){
+            System.out.println("error de tipo: " + e.getMessage());
+        }
+        finally {
+            try {
+                con.close();
+                ps.close();
+            }catch (Exception e){
+                System.out.println("error al finalizar la conexion");
+            }
+        }
         return false;
     }
 
@@ -179,9 +198,14 @@ return false;
         clienteDao.agregarCliente(clienteSuper);*/
 
         //modificar cliente
-        var clienteEnsayo = new Cliente(1,"pablu","meriol", 365);
+        /*var clienteEnsayo = new Cliente(1,"pablu","meriol", 365);
         System.out.println(clienteDao.modificarCliente(clienteEnsayo));
-        clienteDao.modificarCliente(clienteEnsayo);
+        clienteDao.modificarCliente(clienteEnsayo);*/
+
+        // *** PRUEBA ELIMINAR CLIENTE ***
+        System.out.println("prueba eliminar cliente");
+        var clienteEliminable = new Cliente(3);
+        clienteDao.eliminarCliente(clienteEliminable);
 
     }
 }
