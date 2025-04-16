@@ -155,6 +155,7 @@ return false;
 
     @Override
     public boolean eliminarCliente(Cliente cliente) {
+<<<<<<< HEAD
         String sql = "DELETE FROM clientes WHERE id = ?";
         try {
             ps = con.prepareStatement(sql);
@@ -175,6 +176,25 @@ return false;
 
             }catch (Exception e){
                 System.out.println("no se pudo cerrar la conexion: "+e.getMessage());
+=======
+
+        var sql = "DELETE FROM clientes WHERE id = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, cliente.getId());
+            int filasAfectadas = ps.executeUpdate();
+            return filasAfectadas > 0;
+
+        }catch (Exception e){
+            System.out.println("error de tipo: " + e.getMessage());
+        }
+        finally {
+            try {
+                con.close();
+                ps.close();
+            }catch (Exception e){
+                System.out.println("error al finalizar la conexion");
+>>>>>>> a8a8a356cc847ff6dd9da2d9eddc0858212b0730
             }
         }
         return false;
@@ -204,6 +224,7 @@ return false;
         System.out.println(clienteDao.modificarCliente(clienteEnsayo));
         clienteDao.modificarCliente(clienteEnsayo);*/
 
+<<<<<<< HEAD
         // NUEVA PRUEBA AGREGAR CLIENTE
         Cliente clienteX = new Cliente();
         clienteX.setNombre("vespusio");
@@ -211,6 +232,12 @@ return false;
         clienteX.setMembresia(852);
 
         clienteDao.agregarCliente(clienteX);
+=======
+        // *** PRUEBA ELIMINAR CLIENTE ***
+        System.out.println("prueba eliminar cliente");
+        var clienteEliminable = new Cliente(3);
+        clienteDao.eliminarCliente(clienteEliminable);
+>>>>>>> a8a8a356cc847ff6dd9da2d9eddc0858212b0730
 
     }
 }
