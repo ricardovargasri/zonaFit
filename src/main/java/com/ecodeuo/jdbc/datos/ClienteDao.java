@@ -155,6 +155,28 @@ return false;
 
     @Override
     public boolean eliminarCliente(Cliente cliente) {
+        String sql = "DELETE FROM clientes WHERE id = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,cliente.getId());
+            int filasAfectadas = ps.executeUpdate();
+            return filasAfectadas > 0;
+        }catch (Exception e){
+            System.out.println("error de tipo :"+ e.getMessage());
+        }
+        finally {
+            try {
+                if (ps != null){
+                    ps.close();
+                }
+                if (con != null){
+                    con.close();
+                };
+
+            }catch (Exception e){
+                System.out.println("no se pudo cerrar la conexion: "+e.getMessage());
+            }
+        }
         return false;
     }
 

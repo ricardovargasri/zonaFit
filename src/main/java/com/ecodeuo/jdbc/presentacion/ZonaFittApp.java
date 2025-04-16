@@ -6,6 +6,8 @@ import com.ecodeuo.jdbc.dominio.Cliente;
 
 import java.io.Console;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ZonaFittApp {
     public static void main(String[] args) {
@@ -42,7 +44,7 @@ public class ZonaFittApp {
     }
     private static Boolean ejecutarOpciones(Scanner consola, int opcion, IclienteDao clienteDao){
 
-
+        var clienteY = new Cliente();
         var salir = false;
         switch (opcion){
             case 1 -> {
@@ -80,8 +82,7 @@ public class ZonaFittApp {
             }
             case 4 ->{
                 System.out.println("--- MODIFICAR CLIENTE: se buscara por id ---");
-                var id = idSolicitado();
-                var clienteY = new Cliente(id);
+                clienteY.setId(idSolicitado());
                 var buscado = clienteDao.buscarPorId(clienteY);
                 if(buscado){
                     System.out.print("nombre para el cliente: ");
@@ -98,10 +99,21 @@ public class ZonaFittApp {
                     clienteDao.modificarCliente(clienteY);
                     System.out.println("cliente despues de la modificacion: "+ clienteY);
 
-                    return buscado;
+                    salir = true;
 
                 }else
                     System.out.println("cliente no encontrado");
+            }
+            case 5 ->{
+                System.out.println("--- ELIMINADOR DE CLIENTES ---");
+                clienteY.setId(idSolicitado());
+                var buscado = clienteDao.buscarPorId(clienteY);
+                if (buscado){
+                    System.out.println("se eliminara el cliente "+ clienteY.getNombre());
+                    clienteDao.eliminarCliente(clienteY);
+                    return buscado;
+                }else
+                    System.out.println("cliente con id "+ clienteY.getId()+" no existe");
             }
         }
         return salir;
